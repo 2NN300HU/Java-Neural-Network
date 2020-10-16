@@ -29,11 +29,15 @@ public class OutputLayer {
     public double[][] feedFoward(double[][] input) {
         this.input = input;
         this.batchsize = input.length;
-        double[][] result;
-        result = MatrixCalculate.multiply(input, weight);
-        this.output = MatrixCalculate.sum(result, bias);
+        double[][] temp;
+        double[][] result = new double[this.batchsize][this.outputsize];
+        temp = MatrixCalculate.multiply(input, weight);
+        this.output = MatrixCalculate.sum(temp, bias);
         this.outputActivate = this.function.function(this.output);
-        return this.outputActivate;
+        for( int i = 0 ; i < this.outputsize; i++){
+            result[i] = this.outputActivate[i].clone();
+        }
+        return result;
     }
 
     public double[][] backpropagation(int[] label) {
