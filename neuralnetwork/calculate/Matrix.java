@@ -63,7 +63,7 @@ public class Matrix {
         return result;
     }
 
-    public static void join(double[][] weight, double[][] deltaWeight, double learningRate, int batchsize, double[] bias, double[][] deltaBias) {
+    public static void update(double[][] weight, double[][] deltaWeight, double learningRate, int batchsize, double[] bias, double[][] deltaBias) {
         for (int i = 0; i < weight.length; i++) {
             for (int j = 0; j < weight[0].length; j++) {
                 weight[i][j] -= learningRate * deltaWeight[i][j] / batchsize;

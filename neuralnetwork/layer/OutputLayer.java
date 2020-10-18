@@ -60,7 +60,7 @@ public class OutputLayer {
                 }
             }
         }
-        Matrix.join(this.weight, this.deltaWeight, this.learningRate, this.batchsize, this.bias, this.deltaBias);
+        Matrix.update(this.weight, this.deltaWeight, this.learningRate, this.batchsize, this.bias, this.deltaBias);
         return result;
     }
 }
