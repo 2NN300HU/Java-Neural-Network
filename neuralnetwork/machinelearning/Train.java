@@ -1,4 +1,4 @@
-package NeuralNetwork;
+package neuralnetwork.machinelearning;
 
 public class Train {
     private NeuralNetwork neuralNetwork;

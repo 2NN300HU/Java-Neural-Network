@@ -1,4 +1,4 @@
-package NeuralNetwork;
+package neuralnetwork.mnist;
 
 public class MNISTData {
     public int label;

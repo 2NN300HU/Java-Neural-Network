@@ -1,4 +1,4 @@
-package NeuralNetwork;
+package neuralnetwork.mnist;
 
 import java.util.ArrayList;
 

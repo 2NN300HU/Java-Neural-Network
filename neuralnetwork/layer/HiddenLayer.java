@@ -1,6 +1,9 @@
-package NeuralNetwork;
+package neuralnetwork.layer;
 
-public class OutputLayer {
+import neuralnetwork.calculate.Matrix;
+import neuralnetwork.activatefunction.ActivateFunction;
+
+public class HiddenLayer {
     private ActivateFunction function;
     private int inputsize;
     private int outputsize;
@@ -14,7 +17,7 @@ public class OutputLayer {
     private double[][] deltaBias;
     private int batchsize;
 
-    OutputLayer(ActivateFunction function, int inputSize, int outputSize, double learningRate) {
+    HiddenLayer(ActivateFunction function, int inputSize, int outputSize, double learningRate) {
         this.function = function;
         this.inputsize = inputSize;
         this.outputsize = outputSize;
@@ -31,8 +34,8 @@ public class OutputLayer {
         this.batchsize = input.length;
         double[][] temp;
         double[][] result = new double[this.batchsize][this.outputsize];
-        temp = MatrixCalculate.multiply(input, weight);
-        this.output = MatrixCalculate.sum(temp, bias);
+        temp = Matrix.multiply(input, weight);
+        this.output = Matrix.sum(temp, bias);
         this.outputActivate = this.function.function(this.output);
         for( int i = 0 ; i < this.outputsize; i++){
             result[i] = this.outputActivate[i].clone();
@@ -40,15 +43,12 @@ public class OutputLayer {
         return result;
     }
 
-    public double[][] backpropagation(int[] label) {
+    public double[][] backpropagation(double[][] nextLayerResult) {
         double[][] result = new double[this.batchsize][this.inputsize];
         this.deltaBias = new double[this.batchsize][this.outputsize];
         this.deltaWeight = new double[this.inputsize][this.outputsize];
-        for (int i = 0; i < label.length; i++) {
-            this.outputActivate[i][label[i]] -= 1;
-        }
         this.output = this.function.derivative(this.output);
-        this.deltaBias = MatrixCalculate.eachMultiply(this.outputActivate, this.output);
+        this.deltaBias = Matrix.eachMultiply(nextLayerResult, this.output);
         for (int i = 0; i < this.batchsize; i++) {
             for (int k = 0; k < this.inputsize; k++) {
                 for (int j = 0; j < this.outputsize; j++) {
@@ -57,7 +57,7 @@ public class OutputLayer {
                 }
             }
         }
-        MatrixCalculate.join(this.weight, this.deltaWeight, this.learningRate, this.batchsize, this.bias, this.deltaBias);
+        Matrix.join(this.weight, this.deltaWeight, this.learningRate, this.batchsize, this.bias, this.deltaBias);
         return result;
     }
 }

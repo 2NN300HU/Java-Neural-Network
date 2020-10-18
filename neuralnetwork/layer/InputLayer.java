@@ -1,4 +1,6 @@
-package NeuralNetwork;
+package neuralnetwork.layer;
+
+import neuralnetwork.inputfunction.InputFunction;
 
 public class InputLayer {
     private InputFunction function;

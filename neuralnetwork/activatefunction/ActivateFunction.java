@@ -1,4 +1,4 @@
-package NeuralNetwork;
+package neuralnetwork.activatefunction;
 
 public interface ActivateFunction {
     public abstract double[][] function(double[][] input);

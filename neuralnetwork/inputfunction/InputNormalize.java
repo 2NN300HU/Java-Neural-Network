@@ -1,4 +1,4 @@
-package NeuralNetwork;
+package neuralnetwork.inputfunction;
 
 public class InputNormalize implements InputFunction {
     @Override

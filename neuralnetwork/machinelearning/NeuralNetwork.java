@@ -1,4 +1,10 @@
-package NeuralNetwork;
+package neuralnetwork.machinelearning;
+
+import neuralnetwork.activatefunction.ActivateFunction;
+import neuralnetwork.inputfunction.InputFunction;
+import neuralnetwork.layer.HiddenLayer;
+import neuralnetwork.layer.InputLayer;
+import neuralnetwork.layer.OutputLayer;
 
 import java.util.ArrayList;
 

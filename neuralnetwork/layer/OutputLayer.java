@@ -1,6 +1,9 @@
-package NeuralNetwork;
+package neuralnetwork.layer;
 
-public class HiddenLayer {
+import neuralnetwork.calculate.Matrix;
+import neuralnetwork.activatefunction.ActivateFunction;
+
+public class OutputLayer {
     private ActivateFunction function;
     private int inputsize;
     private int outputsize;
@@ -14,7 +17,7 @@ public class HiddenLayer {
     private double[][] deltaBias;
     private int batchsize;
 
-    HiddenLayer(ActivateFunction function, int inputSize, int outputSize, double learningRate) {
+    OutputLayer(ActivateFunction function, int inputSize, int outputSize, double learningRate) {
         this.function = function;
         this.inputsize = inputSize;
         this.outputsize = outputSize;
@@ -31,8 +34,8 @@ public class HiddenLayer {
         this.batchsize = input.length;
         double[][] temp;
         double[][] result = new double[this.batchsize][this.outputsize];
-        temp = MatrixCalculate.multiply(input, weight);
-        this.output = MatrixCalculate.sum(temp, bias);
+        temp = Matrix.multiply(input, weight);
+        this.output = Matrix.sum(temp, bias);
         this.outputActivate = this.function.function(this.output);
         for( int i = 0 ; i < this.outputsize; i++){
             result[i] = this.outputActivate[i].clone();
@@ -40,12 +43,15 @@ public class HiddenLayer {
         return result;
     }
 
-    public double[][] backpropagation(double[][] nextLayerResult) {
+    public double[][] backpropagation(int[] label) {
         double[][] result = new double[this.batchsize][this.inputsize];
         this.deltaBias = new double[this.batchsize][this.outputsize];
         this.deltaWeight = new double[this.inputsize][this.outputsize];
+        for (int i = 0; i < label.length; i++) {
+            this.outputActivate[i][label[i]] -= 1;
+        }
         this.output = this.function.derivative(this.output);
-        this.deltaBias = MatrixCalculate.eachMultiply(nextLayerResult, this.output);
+        this.deltaBias = Matrix.eachMultiply(this.outputActivate, this.output);
         for (int i = 0; i < this.batchsize; i++) {
             for (int k = 0; k < this.inputsize; k++) {
                 for (int j = 0; j < this.outputsize; j++) {
@@ -54,7 +60,7 @@ public class HiddenLayer {
                 }
             }
         }
-        MatrixCalculate.join(this.weight, this.deltaWeight, this.learningRate, this.batchsize, this.bias, this.deltaBias);
+        Matrix.join(this.weight, this.deltaWeight, this.learningRate, this.batchsize, this.bias, this.deltaBias);
         return result;
     }
 }

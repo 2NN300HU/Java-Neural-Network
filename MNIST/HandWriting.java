@@ -1,6 +1,6 @@
 package MNIST;
 
-import NeuralNetwork.*;
+import neuralnetwork.machinelearning.NeuralNetwork;
 
 public class HandWriting {
     public static void main(String[] args) {

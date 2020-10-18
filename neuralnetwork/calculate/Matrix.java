@@ -1,6 +1,6 @@
-package NeuralNetwork;
+package neuralnetwork.calculate;
 
-public class MatrixCalculate {
+public class Matrix {
     public static double[][] sum(double[][] a, double[][] b) {
         double[][] result = new double[a.length][a[0].length];
         for (int i = 0; i < a.length; i++) {
