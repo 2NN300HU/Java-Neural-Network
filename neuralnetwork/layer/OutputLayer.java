@@ -50,7 +50,7 @@ public class OutputLayer {
         for (int i = 0; i < label.length; i++) {
             this.outputActivate[i][label[i]] -= 1;
         }
-        this.output = this.function.derivative(this.output);
+        this.output = this.function.derivative(this.output, this.outputActivate);
         this.deltaBias = Matrix.eachMultiply(this.outputActivate, this.output);
         for (int i = 0; i < this.batchsize; i++) {
             for (int k = 0; k < this.inputsize; k++) {

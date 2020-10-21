@@ -47,7 +47,7 @@ public class HiddenLayer {
         double[][] result = new double[this.batchsize][this.inputsize];
         this.deltaBias = new double[this.batchsize][this.outputsize];
         this.deltaWeight = new double[this.inputsize][this.outputsize];
-        this.output = this.function.derivative(this.output);
+        this.output = this.function.derivative(this.output, this.outputActivate);
         this.deltaBias = Matrix.eachMultiply(nextLayerResult, this.output);
         for (int i = 0; i < this.batchsize; i++) {
             for (int k = 0; k < this.inputsize; k++) {
