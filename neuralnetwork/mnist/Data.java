@@ -1,10 +1,10 @@
 package neuralnetwork.mnist;
 
-public class MNISTData {
+public class Data {
     public int label;
     public int[] data;
 
-    MNISTData(int label, int[] data) {
+    Data(int label, int[] data) {
     }
 
 }
