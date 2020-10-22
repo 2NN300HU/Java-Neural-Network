@@ -1,5 +1,5 @@
 package neuralnetwork.inputfunction;
 
 public interface InputFunction {
-    double[][] function(double[][] input);
+    double[][] function(int[][] input);
 }
