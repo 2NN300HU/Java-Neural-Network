@@ -1,10 +1,10 @@
-package neuralnetwork.mnist;
+package neuralnetwork.dataset;
 
 public class Data {
     private int label;
     private int[] data;
 
-    Data(int label, int[] data) {
+    public Data(int label, int[] data) {
         this.label = label;
         this.data = data.clone();
     }
