@@ -3,64 +3,30 @@ package neuralnetwork.layer;
 import neuralnetwork.calculate.Matrix;
 import neuralnetwork.activatefunction.ActivateFunction;
 
-public class OutputLayer {
-    private ActivateFunction function;
-    private int inputsize;
-    private int outputsize;
-    private double[][] output;
-    private double[][] outputActivate;
-    private double[][] weight;
-    private double[] bias;
-    private double[][] input;
-    private double learningRate;
-    private double[][] deltaWeight;
-    private double[][] deltaBias;
-    private int batchsize;
+public class OutputLayer extends Layer {
 
     public OutputLayer(ActivateFunction function, int inputSize, int outputSize, double learningRate) {
-        this.function = function;
-        this.inputsize = inputSize;
-        this.outputsize = outputSize;
-        this.learningRate = learningRate;
-    }
-
-    public void set(double[][] weight, double[] bias) {
-        this.weight = weight;
-        this.bias = bias;
-    }
-
-    public double[][] feedFoward(double[][] input) {
-        this.input = input;
-        this.batchsize = input.length;
-        double[][] temp;
-        double[][] result = new double[this.batchsize][this.outputsize];
-        temp = Matrix.multiply(input, weight);
-        this.output = Matrix.sum(temp, bias);
-        this.outputActivate = this.function.function(this.output);
-        for( int i = 0 ; i < this.outputsize; i++){
-            result[i] = this.outputActivate[i].clone();
-        }
-        return result;
+        super(function, inputSize, outputSize, learningRate);
     }
 
     public double[][] backpropagation(int[] label) {
-        double[][] result = new double[this.batchsize][this.inputsize];
-        this.deltaBias = new double[this.batchsize][this.outputsize];
-        this.deltaWeight = new double[this.inputsize][this.outputsize];
+        double[][] deltaBias;
+        double[][] result = new double[batchSize][inputSize];
+        double[][] deltaWeight = new double[inputSize][outputSize];
         for (int i = 0; i < label.length; i++) {
-            this.outputActivate[i][label[i]] -= 1;
+            outputActivate[i][label[i]] -= 1;
         }
-        this.output = this.function.derivative(this.output, this.outputActivate);
-        this.deltaBias = Matrix.eachMultiply(this.outputActivate, this.output);
-        for (int i = 0; i < this.batchsize; i++) {
-            for (int k = 0; k < this.inputsize; k++) {
-                for (int j = 0; j < this.outputsize; j++) {
-                    this.deltaWeight[k][j] += this.input[i][k] * this.deltaBias[i][j];
-                    result[i][k] = this.deltaBias[i][j] * this.weight[k][j];
+        output = function.derivative(output, outputActivate);
+        deltaBias = Matrix.eachMultiply(outputActivate, output);
+        for (int i = 0; i < batchSize; i++) {
+            for (int k = 0; k < inputSize; k++) {
+                for (int j = 0; j < outputSize; j++) {
+                    deltaWeight[k][j] += input[i][k] * deltaBias[i][j];
+                    result[i][k] = deltaBias[i][j] * weight[k][j];
                 }
             }
         }
-        Matrix.update(this.weight, this.deltaWeight, this.learningRate, this.batchsize, this.bias, this.deltaBias);
+        Matrix.update(weight, deltaWeight, learningRate, batchSize, bias, deltaBias);
         return result;
     }
 }
