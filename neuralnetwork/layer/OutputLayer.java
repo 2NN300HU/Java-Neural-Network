@@ -13,10 +13,10 @@ public class OutputLayer extends Layer {
         double[][] deltaBias;
         double[][] result = new double[batchSize][inputSize];
         double[][] deltaWeight = new double[inputSize][outputSize];
+        output = function.derivative(output, outputActivate);
         for (int i = 0; i < label.length; i++) {
             outputActivate[i][label[i]] -= 1;
         }
-        output = function.derivative(output, outputActivate);
         deltaBias = Matrix.eachMultiply(outputActivate, output);
         for (int i = 0; i < batchSize; i++) {
             for (int k = 0; k < inputSize; k++) {
