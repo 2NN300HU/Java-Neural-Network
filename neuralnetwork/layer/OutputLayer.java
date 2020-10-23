@@ -17,7 +17,7 @@ public class OutputLayer {
     private double[][] deltaBias;
     private int batchsize;
 
-    OutputLayer(ActivateFunction function, int inputSize, int outputSize, double learningRate) {
+    public OutputLayer(ActivateFunction function, int inputSize, int outputSize, double learningRate) {
         this.function = function;
         this.inputsize = inputSize;
         this.outputsize = outputSize;

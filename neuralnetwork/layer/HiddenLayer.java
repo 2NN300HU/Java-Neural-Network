@@ -17,7 +17,7 @@ public class HiddenLayer {
     private double[][] deltaBias;
     private int batchsize;
 
-    HiddenLayer(ActivateFunction function, int inputSize, int outputSize, double learningRate) {
+    public HiddenLayer(ActivateFunction function, int inputSize, int outputSize, double learningRate) {
         this.function = function;
         this.inputsize = inputSize;
         this.outputsize = outputSize;

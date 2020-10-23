@@ -5,7 +5,7 @@ import neuralnetwork.inputfunction.InputFunction;
 public class InputLayer {
     private InputFunction function;
 
-    InputLayer(InputFunction function) {
+    public InputLayer(InputFunction function) {
         this.function = function;
     }
 
