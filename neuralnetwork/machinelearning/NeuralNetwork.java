@@ -59,4 +59,10 @@ public class NeuralNetwork {
 
     public void getOutputLayer() {
     }
+
+    public void feedFoward() {
+    }
+
+    public void backpropagation() {
+    }
 }

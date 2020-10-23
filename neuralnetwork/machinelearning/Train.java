@@ -8,10 +8,4 @@ public class Train {
 
     Train(NeuralNetwork neuralNetwork) {
     }
-
-    public void feedFoward() {
-    }
-
-    public void backpropagation() {
-    }
 }
