@@ -24,7 +24,7 @@ public class LoadMNIST {
         columnSize = imagedata.readInt();
 
         if (magicNumber != 2051) {
-            throw new Exception("Data file is not Valid :" + dataFile);
+            throw new Exception("Error : Data file is not Valid :" + dataFile);
         }
 
         MNISTFile imagedataFile = new MNISTFile(rowSize, columnSize, itemSize);
@@ -34,14 +34,14 @@ public class LoadMNIST {
         itemSize = labeldata.readInt();
 
         if (magicNumber != 2049) {
-            throw new Exception("Label file is not Valid :" + dataFile);
+            throw new Exception("Error : Label file is not Valid :" + dataFile);
         }
 
         MNISTFile labeldataFile = new MNISTFile(itemSize);
         System.out.printf("Label data loaded; count : %d\n", labeldataFile.dataCount);
 
         if (labeldataFile.dataCount != imagedataFile.dataCount) {
-            throw new Exception("Size of Label File and Image File are not same");
+            throw new Exception("Error : Size of Label File and Image File are not same");
         }
 
         int tempLabel;

@@ -22,7 +22,7 @@ public class NeuralNetwork {
 
     public void addInputLayer(InputFunction inputFunction, int size) throws Exception {
         if (!(inputLayer == null)) {
-            throw new Exception("Input layer already exists!");
+            throw new Exception("Error : Input layer already exists!");
         }
         this.inputLayer = new InputLayer(inputFunction);
         this.inputLayerSize = size;
@@ -30,10 +30,10 @@ public class NeuralNetwork {
 
     public void addHiddenLayer(ActivateFunction function, int size) throws Exception {
         if (inputLayer == null) {
-            throw new Exception("Input layer must be added before adding hidden layer");
+            throw new Exception("Error : Input layer must be added before adding hidden layer");
         }
         if (!(outputLayer == null)) {
-            throw new Exception("Can't add hidden layer when output layer is already added");
+            throw new Exception("Error : Can't add hidden layer when output layer is already added");
         }
         if (hiddenLayers.isEmpty()) {
             hiddenLayers.add(new HiddenLayer(function, inputLayerSize, size, this.learningRate));
@@ -48,7 +48,7 @@ public class NeuralNetwork {
 
     public void addOutputLayer(ActivateFunction function, int size) throws Exception {
         if (inputLayer == null) {
-            throw new Exception("Input layer must be added before adding input layer");
+            throw new Exception("Error : Input layer must be added before adding input layer");
         }
         if (hiddenLayers.isEmpty()) {
             outputLayer = new OutputLayer(function, inputLayerSize, size, this.learningRate);
