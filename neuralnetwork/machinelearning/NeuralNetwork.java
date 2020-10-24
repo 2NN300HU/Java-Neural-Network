@@ -18,6 +18,7 @@ public class NeuralNetwork {
     private ArrayList<Integer> hiddenLayersSize = new ArrayList<>();
     private OutputLayer outputLayer = null;
     private double learningRate;
+    private ArrayList<int[]> layerSize = new ArrayList<>();
 
     public NeuralNetwork(double learningRate) {
         this.learningRate = learningRate;
@@ -40,8 +41,11 @@ public class NeuralNetwork {
         }
         if (hiddenLayers.isEmpty()) {
             hiddenLayers.add(new HiddenLayer(function, inputLayerSize, size, this.learningRate));
+            layerSize.add(new int[]{inputLayerSize, size});
         } else {
-            hiddenLayers.add(new HiddenLayer(function, hiddenLayersSize.get(hiddenLayers.size() - 1), size, this.learningRate));
+            int temp = hiddenLayersSize.get(hiddenLayers.size() - 1);
+            hiddenLayers.add(new HiddenLayer(function, temp, size, this.learningRate));
+            layerSize.add(new int[]{temp, size});
         }
         hiddenLayersSize.add(size);
     }
@@ -55,8 +59,11 @@ public class NeuralNetwork {
         }
         if (hiddenLayers.isEmpty()) {
             outputLayer = new OutputLayer(function, inputLayerSize, size, this.learningRate);
+            layerSize.add(new int[]{inputLayerSize, size});
         } else {
-            outputLayer = new OutputLayer(function, hiddenLayersSize.get(hiddenLayers.size() - 1), size, this.learningRate);
+            int temp = hiddenLayersSize.get(hiddenLayers.size() - 1);
+            outputLayer = new OutputLayer(function, temp, size, this.learningRate);
+            layerSize.add(new int[]{temp, size});
         }
     }
 
@@ -120,5 +127,9 @@ public class NeuralNetwork {
         while (iterator.hasPrevious()) {
             result = iterator.previous().feedForward(result);
         }
+    }
+
+    public ArrayList<int[]> getLayerSize() {
+        return layerSize;
     }
 }

@@ -5,6 +5,8 @@ import neuralnetwork.machinelearning.NeuralNetwork;
 
 import java.util.ArrayList;
 
-public interface InitializeMethod {
-    ArrayList<LayerData> set(NeuralNetwork neuralNetwork);
+public class LoadSettingFile implements InitializeMethod {
+    @Override
+    public ArrayList<LayerData> set(NeuralNetwork neuralNetwork) {
+    }
 }

@@ -2,6 +2,7 @@ package neuralnetwork.machinelearning;
 
 import neuralnetwork.dataset.Data;
 import neuralnetwork.dataset.Dataset;
+import neuralnetwork.initializemethod.InitializeMethod;
 
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ public class Train {
     private int batch;
     private int epoch;
     private int testBatch = 10;
+    private boolean isInitialized = false;
 
     public Train(NeuralNetwork neuralNetwork) {
         this.neuralNetwork = neuralNetwork;
@@ -25,10 +27,12 @@ public class Train {
         this.trainDataset = trainDataset;
     }
 
+    public void Initialize(InitializeMethod initializeMethod) throws Exception {
+        this.isInitialized = true;
+        this.neuralNetwork.setLayerData(initializeMethod.set(neuralNetwork));
+    }
+
     public void run(int batch, int epoch) throws Exception {
-        if (trainDataset == null) {
-            throw new Exception("Error : Neural network for train must be added");
-        }
         this.batch = batch;
         this.epoch = epoch;
         train();
@@ -37,6 +41,9 @@ public class Train {
     private void train() throws Exception {
         if (trainDataset == null) {
             throw new Exception("Error : Dataset for train must be added");
+        }
+        if (!isInitialized) {
+            throw new Exception("Error : Neural network must be initialized");
         }
         for (int epoch = 0; epoch < this.epoch; epoch++) {
             int i = 0;
@@ -59,6 +66,9 @@ public class Train {
     private void test() throws Exception {
         if (trainDataset == null) {
             throw new Exception("Error : Dataset for test must be added");
+        }
+        if (!isInitialized) {
+            throw new Exception("Error : Neural network must be initialized");
         }
         int i = 0;
         double[][] result;
