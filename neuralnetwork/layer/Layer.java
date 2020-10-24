@@ -56,7 +56,7 @@ public class Layer {
         temp = Matrix.multiply(input, weight);
         this.output = Matrix.sum(temp, bias);
         this.outputActivate = this.function.function(this.output);
-        for (int i = 0; i < this.outputSize; i++) {
+        for (int i = 0; i < this.batchSize; i++) {
             result[i] = this.outputActivate[i].clone();
         }
         return result;

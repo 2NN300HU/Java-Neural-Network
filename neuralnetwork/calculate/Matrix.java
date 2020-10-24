@@ -42,7 +42,7 @@ public class Matrix {
     }
 
     public static double[][] multiply(double[][] a, double[][] b) {
-        double[][] result = new double[a.length][a[0].length];
+        double[][] result = new double[a.length][b[0].length];
         for (int i = 0; i < a.length; i++) {
             for (int k = 0; k < b[0].length; k++) {
                 for (int j = 0; j < a[0].length; j++) {
@@ -70,8 +70,8 @@ public class Matrix {
             }
         }
         for (int j = 0; j < deltaBias[0].length; j++) {
-            for (int i = 0; i < deltaBias.length; i++) {
-                bias[j] -= learningRate * deltaBias[i][j] / batchsize;
+            for (double[] deltaBia : deltaBias) {
+                bias[j] -= learningRate * deltaBia[j] / batchsize;
             }
         }
     }

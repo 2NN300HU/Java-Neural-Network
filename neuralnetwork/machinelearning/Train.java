@@ -45,6 +45,7 @@ public class Train {
         if (!isInitialized) {
             throw new Exception("Error : Neural network must be initialized");
         }
+        System.out.println("Start train...\n");
         for (int epoch = 0; epoch < this.epoch; epoch++) {
             int i = 0;
             while (i < this.trainDataset.getDatasetSize()) {
@@ -57,8 +58,9 @@ public class Train {
                 }
                 this.neuralNetwork.feedForward(miniBatch.getInput());
                 this.neuralNetwork.backpropagation(miniBatch.getLabel());
+                System.out.printf("\rcurrent training data number: %d", i);
             }
-            System.out.printf("Epoch : %d / %d ", epoch, this.epoch);
+            System.out.printf("\rTest result : Epoch : %d / %d ", epoch + 1, this.epoch);
             test();
         }
     }
@@ -87,10 +89,11 @@ public class Train {
             result = this.neuralNetwork.feedForward(miniBatch.getInput());
             label = miniBatch.getLabel();
             for (int k = 0; k < miniBatch.size; k++) {
-                if (getMaxLabel(result[k]) == label[i]) {
+                if (getMaxLabel(result[k]) == label[k]) {
                     correct++;
+                } else {
+                    wrong++;
                 }
-                wrong++;
             }
         }
         System.out.printf("Total : %d Wrong : %d Correct : %d Error rate %.3f\n", correct + wrong, wrong, correct, (float) wrong / (correct + wrong));
