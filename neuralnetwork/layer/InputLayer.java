@@ -9,7 +9,7 @@ public class InputLayer {
         this.function = function;
     }
 
-    public double[][] feedForward(int[][] input) {
+    public double[][] feedForward(double[][] input) {
         return this.function.function(input);
     }
 }
