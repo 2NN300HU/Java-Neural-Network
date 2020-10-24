@@ -48,7 +48,7 @@ public class Layer {
         }
     }
 
-    public double[][] feedFoward(double[][] input) {
+    public double[][] feedForward(double[][] input) {
         this.input = input;
         this.batchSize = input.length;
         double[][] temp;
