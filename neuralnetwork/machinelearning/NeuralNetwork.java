@@ -7,13 +7,15 @@ import neuralnetwork.layer.InputLayer;
 import neuralnetwork.layer.OutputLayer;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 public class NeuralNetwork {
     private InputLayer inputLayer = null;
     private int inputLayerSize;
     private ArrayList<HiddenLayer> hiddenLayers = new ArrayList<>();
     private ArrayList<Integer> hiddenLayersSize = new ArrayList<>();
-    private OutputLayer outputLayer;
+    private OutputLayer outputLayer = null;
     private double learningRate;
 
     public NeuralNetwork(double learningRate) {
@@ -60,9 +62,31 @@ public class NeuralNetwork {
     public void getOutputLayer() {
     }
 
-    public void feedFoward() {
+    public double[][] feedForward(double[][] input) throws Exception {
+        if (inputLayer == null) {
+            throw new Exception("Error : Input layer must be added feed forward");
+        }
+        if (!(outputLayer == null)) {
+            throw new Exception("Error : output layer must be added before feed forward");
+        }
+        double[][] result;
+        result = this.inputLayer.feedForward(input);
+
+        for (HiddenLayer hiddenLayer : this.hiddenLayers) {
+            result = hiddenLayer.feedForward(result);
+        }
+
+        result = this.outputLayer.feedForward(result);
+
+        return result;
     }
 
-    public void backpropagation() {
+    public void backpropagation(int[] label) {
+        double[][] result;
+        result = this.outputLayer.backpropagation(label);
+        ListIterator<HiddenLayer> iterator = this.hiddenLayers.listIterator(this.hiddenLayers.size());
+        while (iterator.hasPrevious()) {
+            result = iterator.previous().feedForward(result);
+        }
     }
 }
