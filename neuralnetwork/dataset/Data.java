@@ -2,14 +2,14 @@ package neuralnetwork.dataset;
 
 public class Data {
     private int label;
-    private int[] data;
+    private double[] data;
 
-    public Data(int label, int[] data) {
+    public Data(int label, double[] data) {
         this.label = label;
         this.data = data.clone();
     }
 
-    public int[] getData() {
+    public double[] getData() {
         return data;
     }
 

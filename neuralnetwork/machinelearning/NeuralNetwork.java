@@ -96,7 +96,7 @@ public class NeuralNetwork {
 
     public double[][] feedForward(double[][] input) throws Exception {
         if (inputLayer == null) {
-            throw new Exception("Error : Input layer must be added feed forward");
+            throw new Exception("Error : Input layer must be added before feed forward");
         }
         if (outputLayer == null) {
             throw new Exception("Error : output layer must be added before feed forward");

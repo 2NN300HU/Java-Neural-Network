@@ -44,8 +44,10 @@ public class LoadMNIST {
             throw new Exception("Error : Size of Label File and Image File are not same");
         }
 
+        dataset.setDatasetSize(imagedataFile.dataCount);
+
         int tempLabel;
-        int[] tempImage = new int[imagedataFile.dataSize];
+        double[] tempImage = new double[imagedataFile.dataSize];
 
         for (int k = 0; k < imagedataFile.dataCount; k++) {
             tempLabel = labeldata.readUnsignedByte();
