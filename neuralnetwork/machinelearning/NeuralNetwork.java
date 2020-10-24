@@ -4,6 +4,7 @@ import neuralnetwork.activatefunction.ActivateFunction;
 import neuralnetwork.inputfunction.InputFunction;
 import neuralnetwork.layer.HiddenLayer;
 import neuralnetwork.layer.InputLayer;
+import neuralnetwork.layer.LayerData;
 import neuralnetwork.layer.OutputLayer;
 
 import java.util.ArrayList;
@@ -45,12 +46,12 @@ public class NeuralNetwork {
         hiddenLayersSize.add(size);
     }
 
-    public void getHiddenLayers() {
-    }
-
     public void addOutputLayer(ActivateFunction function, int size) throws Exception {
         if (inputLayer == null) {
             throw new Exception("Error : Input layer must be added before adding input layer");
+        }
+        if (!(outputLayer == null)) {
+            throw new Exception("Error : Output layer already exists!");
         }
         if (hiddenLayers.isEmpty()) {
             outputLayer = new OutputLayer(function, inputLayerSize, size, this.learningRate);
@@ -59,14 +60,45 @@ public class NeuralNetwork {
         }
     }
 
-    public void getOutputLayer() {
+    public ArrayList<LayerData> getLayerData() throws Exception {
+        if (outputLayer == null) {
+            throw new Exception("Error : output layer must be added before saving settings");
+        }
+        ArrayList<LayerData> layerDataArrayList = new ArrayList<>();
+        for (HiddenLayer hiddenLayer : this.hiddenLayers) {
+            layerDataArrayList.add(hiddenLayer.getData());
+        }
+        layerDataArrayList.add(outputLayer.getData());
+        return layerDataArrayList;
+    }
+
+    public void setLayerData(ArrayList<LayerData> layerData) throws Exception {
+        if (inputLayer == null) {
+            throw new Exception("Error : Input layer must be added before load settings");
+        }
+        if (outputLayer == null) {
+            throw new Exception("Error : output layer must be added before load settings");
+        }
+
+        Iterator<LayerData> iterator = layerData.iterator();
+        for (HiddenLayer hiddenLayer : this.hiddenLayers) {
+            if (!iterator.hasNext()) {
+                throw new Exception("Error : Not enough layers in setting");
+            }
+            hiddenLayer.setData(iterator.next());
+        }
+
+        if (!iterator.hasNext()) {
+            throw new Exception("Error : Not enough layers in setting");
+        }
+        outputLayer.setData(iterator.next());
     }
 
     public double[][] feedForward(double[][] input) throws Exception {
         if (inputLayer == null) {
             throw new Exception("Error : Input layer must be added feed forward");
         }
-        if (!(outputLayer == null)) {
+        if (outputLayer == null) {
             throw new Exception("Error : output layer must be added before feed forward");
         }
         double[][] result;
