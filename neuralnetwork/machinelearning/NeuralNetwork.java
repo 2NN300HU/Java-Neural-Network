@@ -125,7 +125,7 @@ public class NeuralNetwork {
         result = this.outputLayer.backpropagation(label);
         ListIterator<HiddenLayer> iterator = this.hiddenLayers.listIterator(this.hiddenLayers.size());
         while (iterator.hasPrevious()) {
-            result = iterator.previous().feedForward(result);
+            result = iterator.previous().backpropagation(result);
         }
     }
 
