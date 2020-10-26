@@ -63,15 +63,15 @@ public class Matrix {
         return result;
     }
 
-    public static void update(double[][] weight, double[][] deltaWeight, double learningRate, int batchsize, double[] bias, double[][] deltaBias) {
+    public static void update(double[][] weight, double[][] deltaWeight, double learningRate, int batchSize, double[] bias, double[][] deltaBias) {
         for (int i = 0; i < weight.length; i++) {
             for (int j = 0; j < weight[0].length; j++) {
-                weight[i][j] -= learningRate * deltaWeight[i][j] / batchsize;
+                weight[i][j] -= learningRate * deltaWeight[i][j] / batchSize;
             }
         }
         for (int j = 0; j < deltaBias[0].length; j++) {
             for (double[] deltaBia : deltaBias) {
-                bias[j] -= learningRate * deltaBia[j] / batchsize;
+                bias[j] -= learningRate * deltaBia[j] / batchSize;
             }
         }
     }
