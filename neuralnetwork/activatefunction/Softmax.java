@@ -4,9 +4,11 @@ public class Softmax implements ActivateFunction {
     @Override
     public double[][] function(double[][] input) {
         double[][] result = new double[input.length][input[0].length];
-        double valueSum = 0.0;
-        double maxValue = 0.0;
+        double valueSum;
+        double maxValue;
         for (int i = 0; i < input.length; i++) {
+            maxValue = 0.0;
+            valueSum = 0.0;
             for (double j : input[i]) {
                 if (maxValue < j) {
                     maxValue = j;
