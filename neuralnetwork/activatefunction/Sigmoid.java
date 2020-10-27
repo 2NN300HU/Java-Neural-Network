@@ -7,9 +7,9 @@ public class Sigmoid implements ActivateFunction {
         for (int i = 0; i < input.length; i++) {
             for (int j = 0; j < input[0].length; j++) {
                 if (input[i][j] < 0) {
-                    result[i][j] = Math.exp(input[i][j]) / (Math.exp(input[i][j]) - 1.0);
+                    result[i][j] = Math.exp(input[i][j]) / (Math.exp(input[i][j]) + 1.0);
                 } else {
-                    result[i][j] = 1.0 / (1.0 - Math.exp((-1.0) * input[i][j]));
+                    result[i][j] = 1.0 / (1.0 + Math.exp((-1.0) * input[i][j]));
                 }
             }
         }

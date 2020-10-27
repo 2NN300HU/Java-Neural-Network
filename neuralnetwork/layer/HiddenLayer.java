@@ -19,7 +19,7 @@ public class HiddenLayer extends Layer {
             for (int k = 0; k < inputSize; k++) {
                 for (int j = 0; j < outputSize; j++) {
                     deltaWeight[k][j] += input[i][k] * deltaBias[i][j];
-                    result[i][k] = deltaBias[i][j] * weight[k][j];
+                    result[i][k] += deltaBias[i][j] * weight[k][j];
                 }
             }
         }

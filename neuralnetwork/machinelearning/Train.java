@@ -32,9 +32,10 @@ public class Train {
         this.neuralNetwork.setLayerData(initializeMethod.set(neuralNetwork));
     }
 
-    public void run(int batch, int epoch) throws Exception {
+    public void run(int batch, int epoch, double learningRate) throws Exception {
         this.batch = batch;
         this.epoch = epoch;
+        this.neuralNetwork.setLearningRate(learningRate);
         train();
     }
 
@@ -59,6 +60,9 @@ public class Train {
                 this.neuralNetwork.feedForward(miniBatch.getInput());
                 this.neuralNetwork.backpropagation(miniBatch.getLabel());
                 System.out.printf("\rcurrent training data number: %d", i);
+                if (i % 100 == 0) {
+                    int a = 0;
+                }
             }
             System.out.printf("\rTest result : Epoch : %d / %d ", epoch + 1, this.epoch);
             test();

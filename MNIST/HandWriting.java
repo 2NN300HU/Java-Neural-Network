@@ -11,16 +11,16 @@ import neuralnetwork.machinelearning.Train;
 
 public class HandWriting {
     public static void main(String[] args) throws Exception {
-        NeuralNetwork nn = new NeuralNetwork(1);
+        NeuralNetwork nn = new NeuralNetwork();
         nn.addInputLayer(new InputNormalize(), 784);
-        nn.addHiddenLayer(new Sigmoid(), 300);
+        //nn.addHiddenLayer(new Sigmoid(), 300);
         nn.addOutputLayer(new Softmax(), 10);
-        //Dataset train = LoadMNIST.load("./src/MNIST/data/train-images-idx3-ubyte", "./src/MNIST/data/train-labels-idx1-ubyte");
+        Dataset train = LoadMNIST.load("./src/MNIST/data/train-images-idx3-ubyte", "./src/MNIST/data/train-labels-idx1-ubyte");
         Dataset test = LoadMNIST.load("./src/MNIST/data/t10k-images-idx3-ubyte", "./src/MNIST/data/t10k-labels-idx1-ubyte");
         Train tr = new Train(nn);
         tr.Initialize(new XavierInitialization());
-        tr.setTrainDataset(test);
+        tr.setTrainDataset(train);
         tr.setTestDataset(test);
-        tr.run(4, 1);
+        tr.run(4, 10, 0.01);
     }
 }
