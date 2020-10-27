@@ -40,8 +40,12 @@ public class Layer {
             LayerData data = new LayerData();
             data.inputSize = this.inputSize;
             data.outputSize = this.outputSize;
-            data.bias = this.bias;
-            data.weight = this.weight;
+            data.bias = this.bias.clone();
+            double[][] temp = new double[this.batchSize][this.outputSize];
+            for (int i = 0; i < this.batchSize; i++) {
+                temp[i] = this.weight[i].clone();
+            }
+            data.weight = temp;
             return data;
         } else {
             throw new Exception("Error : Can't get data from not initialized layer");
