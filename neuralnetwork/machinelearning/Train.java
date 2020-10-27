@@ -38,6 +38,10 @@ public class Train {
         train();
     }
 
+    public void runTest() throws Exception {
+        test();
+    }
+
     private void train() throws Exception {
         if (trainDataset == null) {
             throw new Exception("Error : Dataset for train must be added");

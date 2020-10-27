@@ -5,9 +5,11 @@ import neuralnetwork.activatefunction.Sigmoid;
 import neuralnetwork.activatefunction.Softmax;
 import neuralnetwork.dataset.Dataset;
 import neuralnetwork.datasetload.LoadMNIST;
+import neuralnetwork.initializemethod.HeInitialization;
 import neuralnetwork.initializemethod.XavierInitialization;
 import neuralnetwork.inputfunction.InputNormalize;
 import neuralnetwork.machinelearning.NeuralNetwork;
+import neuralnetwork.machinelearning.Save;
 import neuralnetwork.machinelearning.Train;
 
 public class HandWriting {
@@ -23,5 +25,6 @@ public class HandWriting {
         tr.setTrainDataset(train);
         tr.setTestDataset(test);
         tr.run(4, 1);
+        Save.save(nn);
     }
 }
