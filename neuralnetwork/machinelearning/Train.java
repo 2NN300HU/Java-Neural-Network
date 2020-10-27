@@ -32,10 +32,9 @@ public class Train {
         this.neuralNetwork.setLayerData(initializeMethod.set(neuralNetwork));
     }
 
-    public void run(int batch, int epoch, double learningRate) throws Exception {
+    public void run(int batch, int epoch) throws Exception {
         this.batch = batch;
         this.epoch = epoch;
-        this.neuralNetwork.setLearningRate(learningRate);
         train();
     }
 

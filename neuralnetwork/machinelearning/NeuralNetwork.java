@@ -20,6 +20,10 @@ public class NeuralNetwork {
     private double learningRate;
     private ArrayList<int[]> layerSize = new ArrayList<>();
 
+    public NeuralNetwork(double learningRate) {
+        this.learningRate = learningRate;
+    }
+
     public void addInputLayer(InputFunction inputFunction, int size) throws Exception {
         if (!(inputLayer == null)) {
             throw new Exception("Error : Input layer already exists!");
@@ -129,7 +133,4 @@ public class NeuralNetwork {
         return layerSize;
     }
 
-    public void setLearningRate(double learningRate) {
-        this.learningRate = learningRate;
-    }
 }
