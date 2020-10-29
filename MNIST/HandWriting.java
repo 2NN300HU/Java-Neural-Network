@@ -19,15 +19,15 @@ public class HandWriting {
         nn.addInputLayer(new InputNormalize(), 784);
         nn.addHiddenLayer(new ReLU(), 300);
         nn.addOutputLayer(new Softmax(), 10);
-        Dataset train = LoadMNIST.load("./src/MNIST/data/train-images-idx3-ubyte", "./src/MNIST/data/train-labels-idx1-ubyte");
-        Dataset test = LoadMNIST.load("./src/MNIST/data/t10k-images-idx3-ubyte", "./src/MNIST/data/t10k-labels-idx1-ubyte");
+        Dataset train = LoadMNIST.load("./data/train-images-idx3-ubyte", "./data/train-labels-idx1-ubyte");
+        Dataset test = LoadMNIST.load("./data/t10k-images-idx3-ubyte", "./data/t10k-labels-idx1-ubyte");
         Train tr = new Train(nn);
-        //tr.Initialize(new HeInitialization());
-        tr.Initialize(new LoadSettingFile());
+        tr.Initialize(new HeInitialization());
+        //tr.Initialize(new LoadSettingFile());
         tr.setTrainDataset(train);
         tr.setTestDataset(test);
-        tr.run(3, 1);
+        tr.run(3, 2, true);
         //tr.runTest();
-        //Save.save(nn);
+        Save.save(nn);
     }
 }

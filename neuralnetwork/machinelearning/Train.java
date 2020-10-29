@@ -4,7 +4,9 @@ import neuralnetwork.dataset.Data;
 import neuralnetwork.dataset.Dataset;
 import neuralnetwork.initializemethod.InitializeMethod;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class Train {
     private NeuralNetwork neuralNetwork;
@@ -35,14 +37,20 @@ public class Train {
     public void run(int batch, int epoch) throws Exception {
         this.batch = batch;
         this.epoch = epoch;
-        train();
+        train(false);
+    }
+
+    public void run(int batch, int epoch, boolean backup) throws Exception {
+        this.batch = batch;
+        this.epoch = epoch;
+        train(backup);
     }
 
     public void runTest() throws Exception {
         test();
     }
 
-    private void train() throws Exception {
+    private void train(boolean backup) throws Exception {
         if (trainDataset == null) {
             throw new Exception("Error : Dataset for train must be added");
         }
@@ -66,6 +74,12 @@ public class Train {
             }
             System.out.printf("\rTest result : Epoch : %d / %d ", epoch + 1, this.epoch);
             test();
+            if (backup) {
+                SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_HHmmss");
+                Calendar time = Calendar.getInstance();
+                String formatTime = format.format(time.getTime());
+                Save.save(this.neuralNetwork, formatTime + "_backup_settings.bin");
+            }
         }
     }
 
