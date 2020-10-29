@@ -7,4 +7,6 @@ import java.util.ArrayList;
 
 public interface InitializeMethod {
     ArrayList<LayerData> set(NeuralNetwork neuralNetwork) throws Exception;
+
+    String getName();
 }

@@ -16,6 +16,7 @@ public class Train {
     private int epoch;
     private int testBatch = 10;
     private boolean isInitialized = false;
+    private String initializeMethod;
 
     public Train(NeuralNetwork neuralNetwork) {
         this.neuralNetwork = neuralNetwork;
@@ -32,22 +33,26 @@ public class Train {
     public void Initialize(InitializeMethod initializeMethod) throws Exception {
         this.isInitialized = true;
         this.neuralNetwork.setLayerData(initializeMethod.set(neuralNetwork));
+        this.initializeMethod = initializeMethod.getName();
     }
 
     public void run(int batch, int epoch) throws Exception {
         this.batch = batch;
         this.epoch = epoch;
+        this.neuralNetwork.printSetting();
         train(false);
     }
 
     public void run(int batch, int epoch, boolean backup) throws Exception {
         this.batch = batch;
         this.epoch = epoch;
+        this.neuralNetwork.printSetting();
         train(backup);
     }
 
     public void runTest() throws Exception {
-        test();
+        this.neuralNetwork.printSetting();
+        test("");
     }
 
     private void train(boolean backup) throws Exception {
@@ -57,7 +62,10 @@ public class Train {
         if (!isInitialized) {
             throw new Exception("Error : Neural network must be initialized");
         }
-        System.out.println("Start train...\n");
+        System.out.println("\nStart train...");
+        System.out.printf("Initialize method : %s\n", this.initializeMethod);
+        System.out.printf("Learning rate : %f\n", this.neuralNetwork.getLearningRate());
+        System.out.printf("Batch Size : %d Epoch Size : %d\n", this.batch, this.epoch);
         for (int epoch = 0; epoch < this.epoch; epoch++) {
             int i = 0;
             while (i < this.trainDataset.getDatasetSize()) {
@@ -70,10 +78,9 @@ public class Train {
                 }
                 this.neuralNetwork.feedForward(miniBatch.getInput());
                 this.neuralNetwork.backpropagation(miniBatch.getLabel());
-                System.out.printf("\rcurrent training data number: %d", i);
+                System.out.printf("\rTraining... (%d / %d)", i, this.trainDataset.getDatasetSize());
             }
-            System.out.printf("\rTest result : Epoch : %d / %d ", epoch + 1, this.epoch);
-            test();
+            test(String.format(" Epoch : %d / %d ", epoch + 1, this.epoch));
             if (backup) {
                 SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_HHmmss");
                 Calendar time = Calendar.getInstance();
@@ -83,7 +90,7 @@ public class Train {
         }
     }
 
-    private void test() throws Exception {
+    private void test(String epochData) throws Exception {
         if (testDataset == null) {
             throw new Exception("Error : Dataset for test must be added");
         }
@@ -113,8 +120,9 @@ public class Train {
                     wrong++;
                 }
             }
+            System.out.printf("\rTesting... (%d / %d)", i, this.trainDataset.getDatasetSize());
         }
-        System.out.printf("Total : %d Wrong : %d Correct : %d Error rate %.3f\n", correct + wrong, wrong, correct, (float) wrong / (correct + wrong));
+        System.out.printf("\rTest result : %sTotal : %d Wrong : %d Correct : %d Error rate %.3f\n", epochData, correct + wrong, wrong, correct, (float) wrong / (correct + wrong));
     }
 
     private int getMaxLabel(double[] data) {

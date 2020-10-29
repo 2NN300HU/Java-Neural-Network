@@ -26,7 +26,7 @@ public class HandWriting {
         //tr.Initialize(new LoadSettingFile());
         tr.setTrainDataset(train);
         tr.setTestDataset(test);
-        tr.run(3, 2, true);
+        tr.run(4, 5, true);
         //tr.runTest();
         Save.save(nn);
     }

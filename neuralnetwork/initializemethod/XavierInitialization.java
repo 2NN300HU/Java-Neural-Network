@@ -41,4 +41,9 @@ public class XavierInitialization implements InitializeMethod {
     private double xavier(int in, int out) {
         return (random.nextDouble() - 0.5) * 2 * Math.sqrt(6.0 / (in + out));
     }
+
+    @Override
+    public String getName() {
+        return "Xavier Initialization";
+    }
 }

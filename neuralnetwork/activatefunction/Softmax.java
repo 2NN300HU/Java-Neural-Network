@@ -34,4 +34,9 @@ public class Softmax implements ActivateFunction {
         }
         return result;
     }
+
+    @Override
+    public String getName() {
+        return "Softmax";
+    }
 }

@@ -56,6 +56,7 @@ public class LoadMNIST {
             }
             Data tempData = new Data(tempLabel, tempImage);
             dataset.addData(tempData);
+            System.out.printf("\rLoading dataset ( %d / %d )", k, imagedataFile.dataCount);
 //        //Test code for printing one image
 //        int k = 0;
 //        for (int i : tempData.getData()) {
@@ -66,7 +67,7 @@ public class LoadMNIST {
 //            }
 //        }
         }
-
+        System.out.print("\rDataset loaded\n\n");
         return dataset;
     }
 }

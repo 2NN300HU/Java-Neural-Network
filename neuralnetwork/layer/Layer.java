@@ -65,4 +65,8 @@ public class Layer {
         }
         return result;
     }
+
+    public void printSetting() {
+        System.out.printf("Node : %d Activate Function : %s\n", this.outputSize, this.function.getName());
+    }
 }

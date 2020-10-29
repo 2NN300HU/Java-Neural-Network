@@ -17,4 +17,8 @@ public class InputLayer {
         }
         return this.function.function(input);
     }
+
+    public void printSetting() {
+        System.out.printf("Node : %d Input Function : %s\n", this.inputSize, this.function.getName());
+    }
 }

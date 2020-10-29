@@ -41,4 +41,9 @@ public class HeInitialization implements InitializeMethod {
     private double he(int in) {
         return (random.nextDouble() - 0.5) * 2 * Math.sqrt(6.0 / in);
     }
+
+    @Override
+    public String getName() {
+        return "He Initialization";
+    }
 }

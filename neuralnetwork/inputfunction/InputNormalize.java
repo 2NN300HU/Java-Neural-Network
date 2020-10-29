@@ -11,4 +11,9 @@ public class InputNormalize implements InputFunction {
         }
         return result;
     }
+
+    @Override
+    public String getName() {
+        return "InputNormalize";
+    }
 }

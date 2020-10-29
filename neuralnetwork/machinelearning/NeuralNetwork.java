@@ -133,4 +133,25 @@ public class NeuralNetwork {
         return layerSize;
     }
 
+    public void printSetting() throws Exception {
+        if (inputLayer == null) {
+            throw new Exception("Error : Input layer must be added before printing Settings");
+        }
+        if (outputLayer == null) {
+            throw new Exception("Error : output layer must be added before printing Settings");
+        }
+        System.out.println("<Network Structure>");
+        System.out.print("Input Layer ; ");
+        this.inputLayer.printSetting();
+        for (HiddenLayer i : this.hiddenLayers) {
+            System.out.print("Hidden Layer ; ");
+            i.printSetting();
+        }
+        System.out.print("Output Layer ; ");
+        this.outputLayer.printSetting();
+    }
+
+    public double getLearningRate() {
+        return learningRate;
+    }
 }

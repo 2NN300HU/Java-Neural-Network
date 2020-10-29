@@ -30,4 +30,9 @@ public class ReLU implements ActivateFunction {
         }
         return result;
     }
+
+    @Override
+    public String getName() {
+        return "ReLU";
+    }
 }

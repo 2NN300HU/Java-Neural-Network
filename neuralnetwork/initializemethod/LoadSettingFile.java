@@ -31,4 +31,9 @@ public class LoadSettingFile implements InitializeMethod {
         }
         return layerDataArrayList;
     }
+
+    @Override
+    public String getName() {
+        return "Load Setting File";
+    }
 }
