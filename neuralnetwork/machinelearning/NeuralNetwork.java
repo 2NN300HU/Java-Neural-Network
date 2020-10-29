@@ -28,7 +28,7 @@ public class NeuralNetwork {
         if (!(inputLayer == null)) {
             throw new Exception("Error : Input layer already exists!");
         }
-        this.inputLayer = new InputLayer(inputFunction);
+        this.inputLayer = new InputLayer(inputFunction, size);
         this.inputLayerSize = size;
     }
 
