@@ -6,6 +6,7 @@ import neuralnetwork.activatefunction.Softmax;
 import neuralnetwork.dataset.Dataset;
 import neuralnetwork.datasetload.LoadMNIST;
 import neuralnetwork.initializemethod.HeInitialization;
+import neuralnetwork.initializemethod.LoadSettingFile;
 import neuralnetwork.initializemethod.XavierInitialization;
 import neuralnetwork.inputfunction.InputNormalize;
 import neuralnetwork.machinelearning.NeuralNetwork;
@@ -21,10 +22,12 @@ public class HandWriting {
         Dataset train = LoadMNIST.load("./src/MNIST/data/train-images-idx3-ubyte", "./src/MNIST/data/train-labels-idx1-ubyte");
         Dataset test = LoadMNIST.load("./src/MNIST/data/t10k-images-idx3-ubyte", "./src/MNIST/data/t10k-labels-idx1-ubyte");
         Train tr = new Train(nn);
-        tr.Initialize(new XavierInitialization());
+        //tr.Initialize(new HeInitialization());
+        tr.Initialize(new LoadSettingFile());
         tr.setTrainDataset(train);
         tr.setTestDataset(test);
-        tr.run(4, 1);
-        Save.save(nn);
+        tr.run(3, 1);
+        //tr.runTest();
+        //Save.save(nn);
     }
 }

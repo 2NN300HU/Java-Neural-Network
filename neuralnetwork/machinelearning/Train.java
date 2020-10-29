@@ -63,9 +63,6 @@ public class Train {
                 this.neuralNetwork.feedForward(miniBatch.getInput());
                 this.neuralNetwork.backpropagation(miniBatch.getLabel());
                 System.out.printf("\rcurrent training data number: %d", i);
-                if (i % 100 == 0) {
-                    int a = 0;
-                }
             }
             System.out.printf("\rTest result : Epoch : %d / %d ", epoch + 1, this.epoch);
             test();
@@ -73,7 +70,7 @@ public class Train {
     }
 
     private void test() throws Exception {
-        if (trainDataset == null) {
+        if (testDataset == null) {
             throw new Exception("Error : Dataset for test must be added");
         }
         if (!isInitialized) {

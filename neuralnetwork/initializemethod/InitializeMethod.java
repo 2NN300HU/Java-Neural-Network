@@ -6,5 +6,5 @@ import neuralnetwork.machinelearning.NeuralNetwork;
 import java.util.ArrayList;
 
 public interface InitializeMethod {
-    ArrayList<LayerData> set(NeuralNetwork neuralNetwork);
+    ArrayList<LayerData> set(NeuralNetwork neuralNetwork) throws Exception;
 }

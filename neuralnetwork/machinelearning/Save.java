@@ -11,6 +11,7 @@ public class Save {
     public static void save(NeuralNetwork neuralNetwork) throws Exception {
         DataOutputStream out = new DataOutputStream(new FileOutputStream("setting.bin"));
         ArrayList<LayerData> layerDataArrayList = neuralNetwork.getLayerData();
+        out.writeInt(layerDataArrayList.size());
         for (LayerData i : layerDataArrayList) {
             out.writeInt(i.inputSize);
             out.writeInt(i.outputSize);

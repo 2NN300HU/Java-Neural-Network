@@ -41,8 +41,8 @@ public class Layer {
             data.inputSize = this.inputSize;
             data.outputSize = this.outputSize;
             data.bias = this.bias.clone();
-            double[][] temp = new double[this.batchSize][this.outputSize];
-            for (int i = 0; i < this.batchSize; i++) {
+            double[][] temp = new double[this.inputSize][this.outputSize];
+            for (int i = 0; i < this.inputSize; i++) {
                 temp[i] = this.weight[i].clone();
             }
             data.weight = temp;
