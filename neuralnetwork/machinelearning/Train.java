@@ -66,6 +66,7 @@ public class Train {
         System.out.printf("Initialize method : %s\n", this.initializeMethod);
         System.out.printf("Learning rate : %f\n", this.neuralNetwork.getLearningRate());
         System.out.printf("Batch Size : %d Epoch Size : %d\n", this.batch, this.epoch);
+        System.out.printf("Backup: %b\n", backup);
         for (int epoch = 0; epoch < this.epoch; epoch++) {
             int i = 0;
             while (i < this.trainDataset.getDatasetSize()) {
