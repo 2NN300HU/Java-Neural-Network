@@ -121,7 +121,7 @@ public class Train {
                     wrong++;
                 }
             }
-            System.out.printf("\rTesting... (%d / %d)", i, this.trainDataset.getDatasetSize());
+            System.out.printf("\rTesting... (%d / %d)", i, this.testDataset.getDatasetSize());
         }
         System.out.printf("\rTest result : %sTotal : %d Wrong : %d Correct : %d Error rate %.3f\n", epochData, correct + wrong, wrong, correct, (float) wrong / (correct + wrong));
     }

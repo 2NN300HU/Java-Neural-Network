@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class LoadSettingFile implements InitializeMethod {
     @Override
     public ArrayList<LayerData> set(NeuralNetwork neuralNetwork) throws Exception {
-        DataInputStream in = new DataInputStream(new FileInputStream("setting.bin"));
+        DataInputStream in = new DataInputStream(new FileInputStream("./Settings/settings.bin"));
         ArrayList<LayerData> layerDataArrayList = new ArrayList<>();
         int size = in.readInt();
         for (int i = 0; i < size; i++) {
