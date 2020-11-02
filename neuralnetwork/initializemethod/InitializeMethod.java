@@ -4,9 +4,10 @@ import neuralnetwork.layer.LayerData;
 import neuralnetwork.machinelearning.NeuralNetwork;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface InitializeMethod {
-    ArrayList<LayerData> set(NeuralNetwork neuralNetwork) throws Exception;
+    List<LayerData> set(NeuralNetwork neuralNetwork) throws Exception;
 
     String getName();
 }

@@ -4,6 +4,7 @@ import neuralnetwork.layer.LayerData;
 import neuralnetwork.machinelearning.NeuralNetwork;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class HeInitialization implements InitializeMethod {
@@ -15,9 +16,9 @@ public class HeInitialization implements InitializeMethod {
     }
 
     @Override
-    public ArrayList<LayerData> set(NeuralNetwork neuralNetwork) {
+    public List<LayerData> set(NeuralNetwork neuralNetwork) {
         ArrayList<LayerData> layerDataArrayList = new ArrayList<>();
-        ArrayList<int[]> layerSize = neuralNetwork.getLayerSize();
+        List<int[]> layerSize = neuralNetwork.getLayerSize();
         for (int[] size : layerSize) {
             LayerData temp = new LayerData();
             temp.inputSize = size[0];

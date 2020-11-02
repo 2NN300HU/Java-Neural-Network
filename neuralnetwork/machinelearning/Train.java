@@ -2,6 +2,7 @@ package neuralnetwork.machinelearning;
 
 import neuralnetwork.dataset.Data;
 import neuralnetwork.dataset.Dataset;
+import neuralnetwork.initializemethod.HeInitialization;
 import neuralnetwork.initializemethod.InitializeMethod;
 
 import java.text.SimpleDateFormat;
@@ -9,44 +10,65 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Train {
+
     private NeuralNetwork neuralNetwork;
-    private Dataset trainDataset = null;
-    private Dataset testDataset = null;
-    private int batch;
-    private int epoch;
+    private Dataset trainDataset;
+    private Dataset testDataset;
+    private int batch = 4; // default option
+    private int epoch = 5; // default option
+    private boolean backup = true; // default option
     private int testBatch = 10;
     private boolean isInitialized = false;
-    private String initializeMethod;
+    private final String initializeMethodName;
+    InitializeMethod initializeMethod = TrainMethod.He.get(); // default is HeInitialization
 
-    public Train(NeuralNetwork neuralNetwork) {
+    private Train(NeuralNetwork neuralNetwork) throws Exception {
         this.neuralNetwork = neuralNetwork;
-    }
-
-    public void setTestDataset(Dataset testDataset) {
-        this.testDataset = testDataset;
-    }
-
-    public void setTrainDataset(Dataset trainDataset) {
-        this.trainDataset = trainDataset;
-    }
-
-    public void Initialize(InitializeMethod initializeMethod) throws Exception {
         this.isInitialized = true;
         this.neuralNetwork.setLayerData(initializeMethod.set(neuralNetwork));
-        this.initializeMethod = initializeMethod.getName();
+        this.initializeMethodName = initializeMethod.getName();
     }
 
-    public void run(int batch, int epoch) throws Exception {
-        this.batch = batch;
-        this.epoch = epoch;
-        this.neuralNetwork.printSetting();
-        train(false);
+    public static Train initialize(NeuralNetwork neuralNetwork) throws Exception {
+        return new Train(neuralNetwork);
+    }
+    public Train test(Dataset testDataset) {
+        this.testDataset = testDataset;
+        return this;
+    }
+    public Train train(Dataset trainDataset) {
+        this.trainDataset = trainDataset;
+        return this;
     }
 
-    public void run(int batch, int epoch, boolean backup) throws Exception {
+    public String getInitializeMethodName() {
+        return initializeMethodName;
+    }
+
+    public Train useMethod(InitializeMethod initializeMethod) {
+        this.initializeMethod = initializeMethod;
+        return this;
+    }
+
+    public Train batch(int batch) {
         this.batch = batch;
+        return this;
+    }
+
+    public Train epoch(int epoch) {
         this.epoch = epoch;
-        this.neuralNetwork.printSetting();
+        return this;
+    }
+
+    public Train backup(boolean backup) {
+        this.backup = backup;
+        return this;
+    }
+
+    public void run() throws Exception {
+        if(trainDataset == null) {
+            throw new Exception("you forget setting train dataset in Train class.");
+        }
         train(backup);
     }
 

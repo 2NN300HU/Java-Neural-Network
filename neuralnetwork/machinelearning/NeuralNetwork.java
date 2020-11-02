@@ -1,7 +1,8 @@
 package neuralnetwork.machinelearning;
 
 import neuralnetwork.activatefunction.ActivateFunction;
-import neuralnetwork.inputfunction.InputFunction;
+import neuralnetwork.activatefunction.Softmax;
+import neuralnetwork.inputfunction.InputNormalize;
 import neuralnetwork.layer.HiddenLayer;
 import neuralnetwork.layer.InputLayer;
 import neuralnetwork.layer.LayerData;
@@ -9,30 +10,41 @@ import neuralnetwork.layer.OutputLayer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ListIterator;
 
-public class NeuralNetwork {
-    private InputLayer inputLayer = null;
-    private int inputLayerSize;
-    private ArrayList<HiddenLayer> hiddenLayers = new ArrayList<>();
-    private ArrayList<Integer> hiddenLayersSize = new ArrayList<>();
-    private OutputLayer outputLayer = null;
-    private double learningRate;
-    private ArrayList<int[]> layerSize = new ArrayList<>();
+import static neuralnetwork.machinelearning.NetWorkConfig.*;
 
-    public NeuralNetwork(double learningRate) {
+public class NeuralNetwork {
+    private InputLayer inputLayer;
+    private int inputLayerSize;
+    private final ArrayList<HiddenLayer> hiddenLayers = new ArrayList<>();
+    private final ArrayList<Integer> hiddenLayersSize = new ArrayList<>();
+    private OutputLayer outputLayer;
+    private final double learningRate;
+    private final List<int[]> layerSize = new ArrayList<>();
+    private final InputNormalize inputNormalize = getInputNormalize();
+    private final ActivateFunction activateFunction = getFunction();
+    private final Softmax softmax = getSoftMax();
+
+    private NeuralNetwork(double learningRate) {
         this.learningRate = learningRate;
     }
 
-    public void addInputLayer(InputFunction inputFunction, int size) throws Exception {
+    public static NeuralNetwork rate(double learningRate) {
+        return new NeuralNetwork(learningRate);
+    }
+
+    public NeuralNetwork addInputLayer(int size) throws Exception {
         if (!(inputLayer == null)) {
             throw new Exception("Error : Input layer already exists!");
         }
-        this.inputLayer = new InputLayer(inputFunction, size);
+        this.inputLayer = new InputLayer(inputNormalize, size);
         this.inputLayerSize = size;
+        return this;
     }
 
-    public void addHiddenLayer(ActivateFunction function, int size) throws Exception {
+    public NeuralNetwork addHiddenLayer(int size) throws Exception {
         if (inputLayer == null) {
             throw new Exception("Error : Input layer must be added before adding hidden layer");
         }
@@ -40,17 +52,18 @@ public class NeuralNetwork {
             throw new Exception("Error : Can't add hidden layer when output layer is already added");
         }
         if (hiddenLayers.isEmpty()) {
-            hiddenLayers.add(new HiddenLayer(function, inputLayerSize, size, this.learningRate));
+            hiddenLayers.add(new HiddenLayer(activateFunction, inputLayerSize, size, this.learningRate));
             layerSize.add(new int[]{inputLayerSize, size});
         } else {
             int temp = hiddenLayersSize.get(hiddenLayers.size() - 1);
-            hiddenLayers.add(new HiddenLayer(function, temp, size, this.learningRate));
+            hiddenLayers.add(new HiddenLayer(activateFunction, temp, size, this.learningRate));
             layerSize.add(new int[]{temp, size});
         }
         hiddenLayersSize.add(size);
+        return this;
     }
 
-    public void addOutputLayer(ActivateFunction function, int size) throws Exception {
+    public NeuralNetwork addOutputLayer(int size) throws Exception {
         if (inputLayer == null) {
             throw new Exception("Error : Input layer must be added before adding input layer");
         }
@@ -58,19 +71,17 @@ public class NeuralNetwork {
             throw new Exception("Error : Output layer already exists!");
         }
         if (hiddenLayers.isEmpty()) {
-            outputLayer = new OutputLayer(function, inputLayerSize, size, this.learningRate);
+            outputLayer = new OutputLayer(softmax, inputLayerSize, size, this.learningRate);
             layerSize.add(new int[]{inputLayerSize, size});
         } else {
             int temp = hiddenLayersSize.get(hiddenLayers.size() - 1);
-            outputLayer = new OutputLayer(function, temp, size, this.learningRate);
+            outputLayer = new OutputLayer(softmax, temp, size, this.learningRate);
             layerSize.add(new int[]{temp, size});
         }
+        return this;
     }
 
     public ArrayList<LayerData> getLayerData() throws Exception {
-        if (outputLayer == null) {
-            throw new Exception("Error : output layer must be added before saving settings");
-        }
         ArrayList<LayerData> layerDataArrayList = new ArrayList<>();
         for (HiddenLayer hiddenLayer : this.hiddenLayers) {
             layerDataArrayList.add(hiddenLayer.getData());
@@ -79,13 +90,7 @@ public class NeuralNetwork {
         return layerDataArrayList;
     }
 
-    public void setLayerData(ArrayList<LayerData> layerData) throws Exception {
-        if (inputLayer == null) {
-            throw new Exception("Error : Input layer must be added before load settings");
-        }
-        if (outputLayer == null) {
-            throw new Exception("Error : output layer must be added before load settings");
-        }
+    public void setLayerData(List<LayerData> layerData) throws Exception {
 
         Iterator<LayerData> iterator = layerData.iterator();
         for (HiddenLayer hiddenLayer : this.hiddenLayers) {
@@ -129,7 +134,7 @@ public class NeuralNetwork {
         }
     }
 
-    public ArrayList<int[]> getLayerSize() {
+    public List<int[]> getLayerSize() {
         return layerSize;
     }
 
